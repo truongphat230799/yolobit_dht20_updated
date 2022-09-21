@@ -1,5 +1,6 @@
 from machine import SoftI2C
 from time import sleep_ms
+from yolobit import *
 class DHT20(object):
     def __init__(self, i2c):
         self.i2c = i2c
@@ -69,7 +70,7 @@ class DHT20(object):
             Temper = (Temper * 200 * 10 / 1024 / 1024 - 500)/10
         return round(Temper, 1)
       else:
-        print(0)
+        return round(0, 1)
 
     def dht20_humidity(self):
       if self.sensor_status == 1 :
@@ -83,12 +84,11 @@ class DHT20(object):
             humidity = (humidity * 100 * 10 / 1024 / 1024)/10
         return round(humidity, 1)
       else:
-        print(0)
+        return round(0,1)
         
 t = DHT20(SoftI2C(scl=Pin(22), sda=Pin(21)))
         
-while True:
+if True:
   t.dht20_read_status()
-  print(t.dht20_temperature())
+  display.scroll(t.dht20_temperature())
   time.sleep_ms(1000)
-        
