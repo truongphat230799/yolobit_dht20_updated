@@ -18,6 +18,7 @@ class DHT20(object):
           print('sensor founded!')
             
     def read_dht20(self):
+      if self.sensor_status == 1 :
         self.i2c.writeto(0x38, bytes([0xac,0x33,0x00]))
         sleep_ms(80)
         cnt = 0
@@ -31,6 +32,8 @@ class DHT20(object):
         for i in data[:]:
             n.append(i)
         return n
+      else:
+        return 0 
         
     def dht20_read_status(self, data = 0):
       self.data = data
@@ -89,6 +92,6 @@ class DHT20(object):
 t = DHT20(SoftI2C(scl=Pin(22), sda=Pin(21)))
         
 if True:
-  t.dht20_read_status()
+  t.read_dht20()
   display.scroll(t.dht20_temperature())
   time.sleep_ms(1000)
